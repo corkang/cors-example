@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [text, setText] = useState("불러오는 중...");
+
+  useEffect(() => {
+    // const url = "https://libsta.go.kr/nlstatapi/api/v1/libinfo?region=%EC%84%9C%EC%9A%B8&libCode=1010011001&libGubun=LIBTYPE000001&libName=%EA%B5%AD%EB%A6%BD%EC%A4%91%EC%95%99%EB%8F%84%EC%84%9C%EA%B4%80&city=%EC%84%9C%EC%B4%88%EA%B5%AC&page=1&size=1";
+    const url = "/nlstatapi/api/v1/libinfo?region=%EC%84%9C%EC%9A%B8&libCode=1010011001&libGubun=LIBTYPE000001&libName=%EA%B5%AD%EB%A6%BD%EC%A4%91%EC%95%99%EB%8F%84%EC%84%9C%EA%B4%80&city=%EC%84%9C%EC%B4%88%EA%B5%AC&page=1&size=1";
+
+    console.log("Requested URL:", url);
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Response JSON:", data);
+        const lib = data.result.list[0];
+        setText(`${lib.libName}(${lib.addr}) / Phone number: ${lib.phone}`);
+      })
+      .catch((err) => {
+        console.error("Error:", err);
+        setText("Error occured while reading data.");
+      });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>{text}</h2>
     </div>
   );
 }
