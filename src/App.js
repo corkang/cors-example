@@ -5,14 +5,15 @@ function App() {
   const [text, setText] = useState("불러오는 중...");
 
   useEffect(() => {
-    const url = "/todos/1";  // _redirects 또는 proxy 사용 시
+    const url = "https://jsonplaceholder.typicode.com/todos/1";
+    // const url = "/todos/1";
 
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
         console.log("Response JSON:", data);
 
-        // JSONPlaceholder 응답 구조
+        // JSONPlaceholder answer structure
         // { userId: 1, id: 1, title: "...", completed: false }
         const title = data.title;
 
