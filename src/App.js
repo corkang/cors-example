@@ -23,9 +23,9 @@ function App() {
       });
   }, []);
 
-  // fetch("/todos/1")
-  // .then(res => res.json())
-  // .then(console.log)
+  fetch("/todos/1")
+  .then(res => res.json())
+  .then(console.log)
 
   return (
     <div className="App">
