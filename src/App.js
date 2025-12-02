@@ -5,27 +5,24 @@ function App() {
   const [text, setText] = useState("불러오는 중...");
 
   useEffect(() => {
-    // const url = "https://libsta.go.kr/nlstatapi/api/v1/libinfo?region=%EC%84%9C%EC%9A%B8&libCode=1010011001&libGubun=LIBTYPE000001&libName=%EA%B5%AD%EB%A6%BD%EC%A4%91%EC%95%99%EB%8F%84%EC%84%9C%EA%B4%80&city=%EC%84%9C%EC%B4%88%EA%B5%AC&page=1&size=1";
-    const url = "/nlstatapi/api/v1/libinfo?region=%EC%84%9C%EC%9A%B8&libCode=1010011001&libGubun=LIBTYPE000001&libName=%EA%B5%AD%EB%A6%BD%EC%A4%91%EC%95%99%EB%8F%84%EC%84%9C%EA%B4%80&city=%EC%84%9C%EC%B4%88%EA%B5%AC&page=1&size=1";
-
-    console.log("Requested URL:", url);
+    const url = "/todos/1";  // _redirects 또는 proxy 사용 시
 
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
         console.log("Response JSON:", data);
-        const lib = data.result.list[0];
-        setText(`${lib.libName}(${lib.addr}) / Phone number: ${lib.phone}`);
+
+        // JSONPlaceholder 응답 구조
+        // { userId: 1, id: 1, title: "...", completed: false }
+        const title = data.title;
+
+        setText(`Title: ${title}`);
       })
       .catch((err) => {
         console.error("Error:", err);
-        setText("Error occured while reading data.");
+        setText("Error occurred while loading data.");
       });
   }, []);
-
-  fetch("/todos/1")
-  .then(res => res.json())
-  .then(console.log)
 
   return (
     <div className="App">
